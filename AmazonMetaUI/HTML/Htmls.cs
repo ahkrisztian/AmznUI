@@ -20,9 +20,8 @@ namespace AmazonMetaUI.HTML
 
             foreach (var html in htmls)
             {
-                tasks.Add(Task.Run(() => HTML.GetHtmlTextParallel.getHtml2(html.LinkForth)));
+                tasks.Add(Task.Run(async () => await GetHtmlTextParallel.getHtml2(html.LinkForth)));
                 progress.Report($"Collecting Data");
-                Thread.Sleep(100);
             }
 
             var result = await Task.WhenAll(tasks);

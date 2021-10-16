@@ -67,53 +67,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
-        <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
-        <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
-        <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
-        <Style x:Key="TextBoxStyle1" TargetType="{x:Type TextBox}">
-            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="AllowDrop" Value="true"/>
-            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
-            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-            <Setter Property="TextAlignment" Value="Left"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border x:Name="border" CornerRadius="20" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True">
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
-                        <Condition Property="IsSelectionActive" Value="false"/>
-                    </MultiTrigger.Conditions>
-                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
-                </MultiTrigger>
-            </Style.Triggers>
-        </Style>
-        
+
         <SolidColorBrush x:Key="TextBox.Static.Border1" Color="#FFABAdB3"/>
         <SolidColorBrush x:Key="TextBox.MouseOver.Border1" Color="#FF7EB4EA"/>
         <SolidColorBrush x:Key="TextBox.Focus.Border1" Color="#FF569DE5"/>
@@ -121,8 +75,9 @@
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
             <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border1}"/>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="AllowDrop" Value="true"/>
@@ -140,10 +95,7 @@
                             <Trigger Property="IsEnabled" Value="false">
                                 <Setter Property="Opacity" TargetName="border" Value="0.56"/>
                             </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="Blue"/>
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Trigger Property="IsKeyboardFocused" Value="false">
                                 <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border1}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -186,7 +138,7 @@
                 
             </Label>
 
-            <TextBox Style="{DynamicResource TextBoxStyle1}" Grid.Column="1" 
+            <TextBox Style="{DynamicResource TextBoxStyle2}" Grid.Column="1" 
                        Width="550"
                        Height="300"
                        x:Name="_textBlock"
@@ -194,16 +146,15 @@
                        BorderThickness="0"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"
+                       TextAlignment="Left"
                        Margin="20,20,20,20"
                        Padding="5"
                        FontSize="15"
                        Foreground="White"
                        Background="#70AF85"
                        TextWrapping="Wrap"
-                       Text="{Binding Path=Text}" 
-                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                       ScrollViewer.VerticalScrollBarVisibility="Auto"
-                       ScrollViewer.CanContentScroll="True">
+                       Text="{Binding Path=Text}">
+
 
             </TextBox>
 
@@ -285,7 +236,8 @@
                         VerticalAlignment="Center"
                         Padding="5"
                         Foreground="AntiqueWhite"
-                        Text="Amazon Link">
+                        Text="Amazon Link"
+                        GotFocus="_textBox_GotFocus">
 
                     </TextBox>
                 </Grid>
@@ -302,8 +254,23 @@
                     Margin="20,20,20,20"
                     FontFamily="Baskerville,Georgia"
                     Name="Search"
-                    Click="Search_Click"
-                    >Search</Button>
+                    Click="Search_Click">Search
+            </Button>
+
+            <Button Style="{DynamicResource ButtonStyle1}"
+                    Grid.Column="1"
+                    Width="50"
+                    Height="50"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"                 
+                    Background="#C84361"
+                    Foreground="AntiqueWhite"
+                    FontSize="40"
+                    Margin="0,10,10,0"
+                    FontFamily="Baskerville,Georgia"
+                    x:Name="lose"
+                    Click="Close_Click">X
+            </Button>
 
         </Grid>
     </Border>

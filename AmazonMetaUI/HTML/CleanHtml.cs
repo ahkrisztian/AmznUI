@@ -17,7 +17,7 @@ namespace AmazonMetaUI.HTML
             string[] html = page.Split(new[] { "cr-filter-info-section", "window.P.register('cf')" }, StringSplitOptions.RemoveEmptyEntries);
 
             //Second part - where the reviews are
-            string[] htmll = html[1].Split(new[] { "review-body" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] htmll = html[1].Split(new[] { "data-hook=\"review\"" }, StringSplitOptions.RemoveEmptyEntries);
 
             var values = new String[] {
                 "div", "/div", "class", "<a>", "</a>", "script", "{", "}",
@@ -63,13 +63,13 @@ namespace AmazonMetaUI.HTML
                 }
             });
 
-
+            List<string> ConcataData = data.Concat(data2).ToList();
 
             List<string> cleanData = new List<string>();
 
-            data.AddRange(data2);
+            //data.AddRange(data2);
 
-            foreach (string s in data)
+            foreach (string s in ConcataData)
             {
                 if (!s.StartsWith("Von") && !s.Contains("globale Bewertungen"))
                 {

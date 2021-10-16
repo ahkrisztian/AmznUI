@@ -9,11 +9,11 @@ namespace AmazonMetaUI.HTML
 {
     public static class GetLinkParts
     {
-        public static PageLinkModel NewPageLinkModel(string url)
+        public static async Task<PageLinkModel> NewPageLinkModel(string url)
         {
             List<string> darabolt2 = new List<string>();
 
-            string asyncDivs = GetHtml.getHtml(url).Result;
+            string asyncDivs = await GetHtml.getHtml(url);
 
             string[] divs = asyncDivs.Split('<');
 
@@ -26,7 +26,7 @@ namespace AmazonMetaUI.HTML
 
             //Next page buttom link
 
-            string divAsync = GetHtml.getHtml(nexturl).Result;
+            string divAsync = await GetHtml.getHtml(nexturl);
 
             string[] div = divAsync.Split(' ');
 

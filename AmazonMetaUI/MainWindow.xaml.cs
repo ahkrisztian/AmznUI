@@ -91,6 +91,8 @@ namespace AmazonMetaUI
                 OnPropertyChanged();
             }
         }
+
+        public int CountedNumbersOfComments { get; set; }
         public MainWindow()
         {
             DataContext = this;
@@ -101,41 +103,47 @@ namespace AmazonMetaUI
         private async void Search_Click(object sender, RoutedEventArgs e)
         {
             await Comments(_textBox.Text);
+            _textBox.Text = "";
 
         }
 
         async Task Comments(string url)
         {
+
             var progress = new Progress<string>(value =>
             {
                 Label = value;
             });
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
-                CommentNumber3 = $"Number of Comments:{Environment.NewLine} {NumberOfComments.GetNumberOfComments(url, progress)}";
+                CountedNumbersOfComments = await NumberOfComments.GetNumberOfComments(url, progress);
+
+                CommentNumber3 = $"Number of Comments:{Environment.NewLine} {CountedNumbersOfComments}";
             });
 
             List<IPageLinkModel> models = new List<IPageLinkModel>();
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
-                models = GetTheUrls.urls(url, progress);
+                var pagemodels = await GetLinkParts.NewPageLinkModel(url);
+
+                models = GetTheUrls.urls(url, progress, CountedNumbersOfComments, pagemodels);
                 
             });
 
-            List<string> CommentsAndTitles = new List<string>();
-
-            await Task.Run(() =>
-            {
-                CommentsAndTitles = Htmls.asynchtml(models, progress).Result;
-            });
+            List<CommentModel> ToCalculate = new List<CommentModel>();
 
             var newlink = new CreateLinkList();
 
-            var ToCalculate = newlink.AddLinkModel(CommentsAndTitles);
+            await Task.Run(async () =>
+            {
+                List<string> CommentsAndTitles = await Htmls.asynchtml(models, progress);
+               
+                ToCalculate = newlink.AddLinkModel(CommentsAndTitles);
 
-            Text = newlink.ToString();
+                Text = newlink.ToString();
+            });
 
 
             CommentNumber2 =  new CalculateCommentLength(ToCalculate).ToString();
@@ -159,6 +167,16 @@ namespace AmazonMetaUI
 
             // Begin dragging the window
             this.DragMove();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.Shutdown();
+        }
+
+        private void _textBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            _textBox.Text = "";
         }
     }
 

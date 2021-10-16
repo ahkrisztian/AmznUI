@@ -9,11 +9,11 @@ namespace AmazonMetaUI.Comments
 {
     public static class NumberOfComments
     {
-        public static int GetNumberOfComments(string url, IProgress<string> progress)
+        public static async Task<int> GetNumberOfComments(string url, IProgress<string> progress)
         {
             progress.Report("Counting Comments");
 
-            string asyncHtml = GetHtml.getHtml(url).Result;
+            var asyncHtml = await GetHtml.getHtml(url);
 
             string[] divs = asyncHtml.Split('<');
 
@@ -23,7 +23,7 @@ namespace AmazonMetaUI.Comments
             //Get a reviews page
             string nexturl = GetLinksFunctions.link(reviewlinkfoot);
 
-            string nextUrlAsync = GetHtml.getHtml(nexturl).Result;
+            var nextUrlAsync = await GetHtml.getHtml(nexturl);
 
             string[] div = nextUrlAsync.Split('\n');
 

@@ -1,0 +1,5 @@
+C:\Users\lunar\Desktop\AmznUi\AmazonMetaUI.exe
+C:\Users\lunar\Desktop\AmznUi\AmazonMetaUI.dll
+C:\Users\lunar\Desktop\AmznUi\AmazonMetaUI.deps.json
+C:\Users\lunar\Desktop\AmznUi\AmazonMetaUI.runtimeconfig.json
+C:\Users\lunar\Desktop\AmznUi\AmazonMetaUI.pdb

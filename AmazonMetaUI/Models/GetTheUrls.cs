@@ -11,18 +11,20 @@ namespace AmazonMetaUI.Models
 {
     public static class GetTheUrls
     {
-        public static List<IPageLinkModel> urls(string url, IProgress<string> progress)
+        public static List<IPageLinkModel> urls(string url, IProgress<string> progress, int comments, PageLinkModel pageModel)
         {          
-            int Comments = NumberOfComments.GetNumberOfComments(url, progress) / 10 + 2;
+            int Comments = comments / 10 + 2;
 
             progress.Report("Counting Comments");
 
-            var pageModel = GetLinkParts.NewPageLinkModel(url);
+            //var pageModel = GetLinkParts.NewPageLinkModel(url);
 
             List<IPageLinkModel> models = new List<IPageLinkModel>();
 
             for (int i = 1; i < Comments; i++)
             {
+                progress.Report($"Creating the links");
+
                 models.Add(new PageLinkModel
                 {
                     LinkFirst = pageModel.LinkFirst,
@@ -33,9 +35,7 @@ namespace AmazonMetaUI.Models
                                 $"/ref=cm_cr_getr_d_paging_btm_next_{i}?ie=UTF8&reviewerType=all_reviews&pageNumber={i}"
 
                 });
-
-                progress.Report($"Creating the links");
-                Thread.Sleep(100);
+            
             }
 
             return models;

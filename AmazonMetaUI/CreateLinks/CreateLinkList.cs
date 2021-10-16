@@ -32,6 +32,6 @@ namespace AmazonMetaUI.CreateLinks
 
         public override string ToString() =>
                 string.Join(Environment.NewLine,
-                models.Select(x => $"Title: {x.CommentTitle}\n Comment:{x.Comment}\n"));
+                models.Select(x => $"Title: {x.CommentTitle}{Environment.NewLine}Comment: {x.Comment}{Environment.NewLine}------------------------------------------"));
     }
 }
