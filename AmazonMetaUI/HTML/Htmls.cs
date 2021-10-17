@@ -11,12 +11,12 @@ namespace AmazonMetaUI.HTML
     public static class Htmls
     {
 
-        public static async Task<List<string>> asynchtml(List<IPageLinkModel> htmls, IProgress<string> progress)
+        public static async Task<List<ReviewModel>> asynchtml(List<IPageLinkModel> htmls, IProgress<string> progress)
         {
             //
-            List<string> websites = new List<string>();
+            List<ReviewModel> websites = new List<ReviewModel>();
 
-            List<Task<List<string>>> tasks = new List<Task<List<string>>>();
+            List<Task<List<ReviewModel>>> tasks = new List<Task<List<ReviewModel>>>();
 
             foreach (var html in htmls)
             {

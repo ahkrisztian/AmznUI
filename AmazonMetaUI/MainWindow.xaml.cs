@@ -138,7 +138,7 @@ namespace AmazonMetaUI
 
             await Task.Run(async () =>
             {
-                List<string> CommentsAndTitles = await Htmls.asynchtml(models, progress);
+                List<ReviewModel> CommentsAndTitles = await Htmls.asynchtml(models, progress);
                
                 ToCalculate = newlink.AddLinkModel(CommentsAndTitles);
 

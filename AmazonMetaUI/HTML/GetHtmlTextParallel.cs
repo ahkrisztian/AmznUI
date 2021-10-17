@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AmazonMetaUI.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,12 +11,11 @@ namespace AmazonMetaUI.HTML
 {
     public static class GetHtmlTextParallel
     {
-        public static async Task<List<string>> getHtml2(string x)
+        public static async Task<List<ReviewModel>> getHtml2(string x)
         {
             string responseFromServer = await GetHtml.getHtml(x);
 
-            return CleanHtml.GetCommentsTitlesParallel(responseFromServer);
-
+            return CleanData.Middle(responseFromServer);
         }
     }
 }
